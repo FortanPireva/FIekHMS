@@ -9,7 +9,6 @@ namespace FiekHealthCareManagment.Services
         
         Task<User> GetById(string userid);
         Task<AuthenticationResponse> Authenticate(AuthenticationRequest model);
-
         Task<RegistrationResponse> Register(RegistrationRequest registrationRequest);
     }
 }
