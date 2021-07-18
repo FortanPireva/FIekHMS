@@ -53,11 +53,11 @@ const EditPatient = () => {
       console.log(id);
       const data = await http.getPatient(id);
       console.log(data);
-      if (data.birthday) setDate(data.birthday);
+      if (data.birthDay) setDate(data.birthDay);
       if (data.yearOfBirth) {
         setYear(data.yearOfBirth);
       }
-      setName(data.name);
+      setName(data.firstName + " " + data.lastName);
       setAddress(data.address);
     };
     fetchPatient();
@@ -67,8 +67,9 @@ const EditPatient = () => {
   };
   const handleSubmit = async () => {
     const data = {
-      _id: id,
-      name: name,
+      id: id,
+      firstName: name.split(" ")[0],
+      lastName: name.split(" ")[1],
       address,
       year,
       birthday: date,

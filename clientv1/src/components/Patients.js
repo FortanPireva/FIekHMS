@@ -40,20 +40,20 @@ export const Patients = () => {
 
   const handleDelete = async (patient) => {
     const oldpatients = [...patients];
-    setPatients(patients.filter((p) => patient._id !== p._id));
-    setFilteredPatients(patients.filter((p) => patient._id !== p._id));
-    const data = await http.deletePatient(patient._id);
+    setPatients(patients.filter((p) => patient.id !== p.id));
+    setFilteredPatients(patients.filter((p) => patient.id !== p.id));
+    const data = await http.deletePatient(patient.id);
     console.log(data);
     if (data.error) {
       setPatients(oldpatients);
     }
   };
-  const handleEdit = (_id) => {
-    history.push(applinks.editPatient + "/" + _id);
+  const handleEdit = (id) => {
+    history.push(applinks.editPatient + "/" + id);
   };
 
-  const handleMore = (_id) => {
-    history.push(applinks.patients + "/" + _id + applinks.reports);
+  const handleMore = (id) => {
+    history.push(applinks.patients + "/" + id + applinks.reports);
   };
   const classes = useStyles();
 
@@ -89,8 +89,8 @@ export const Patients = () => {
           <AppCard
             patient={patient}
             onDelete={() => handleDelete(patient)}
-            onEdit={() => handleEdit(patient._id)}
-            handleMore={() => handleMore(patient._id)}
+            onEdit={() => handleEdit(patient.id)}
+            handleMore={() => handleMore(patient.id)}
           />
         ))}
       {networkNotAvailable && (

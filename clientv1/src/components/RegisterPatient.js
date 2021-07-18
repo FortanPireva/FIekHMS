@@ -53,7 +53,8 @@ const RegisterPatient = () => {
   };
   const handleSubmit = async () => {
     const data = {
-      name: name,
+      firstName: name.split(" ")[0],
+      lastName: name.split(" ")[1],
       address,
       year,
       birthday: date,

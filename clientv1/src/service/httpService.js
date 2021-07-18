@@ -1,8 +1,31 @@
 import axios from "axios";
-const baseURL = "http://localhost:5000/api";
+const baseURL = "https://localhost:5001/";
 const instance = axios.create({
   baseURL: baseURL,
 });
+instance.interceptors.request.use(
+  function (config) {
+    // Do something before request is sent
+    console.log(config);
+    return config;
+  },
+  function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  }
+);
+
+// Add a response interceptor
+instance.interceptors.response.use(
+  function (response) {
+    // Do something with response data
+    return response;
+  },
+  function (error) {
+    // Do something with response error
+    return Promise.reject(error);
+  }
+);
 const http = {
   baseURL,
   getPatients: async ({ size = 5, start = 1, search = undefined }) => {
@@ -10,11 +33,14 @@ const http = {
       let response = await instance.get(
         `/patients?num=${size}&search=${search}`
       );
-      //   response = await response.json();
-      //   console.log(response);
-      //   return response.data();
+
       console.log(response + "response");
-      return response.data;
+      return response.data.map((patient) => {
+        return {
+          ...patient,
+          name: patient.firstName + " " + patient.lastName,
+        };
+      });
     } catch (error) {
       return { error: error };
     }
@@ -71,7 +97,7 @@ const http = {
   },
   editPatient: async (data) => {
     try {
-      let response = await instance.put(`/patients/${data._id}`, data);
+      let response = await instance.put(`/patients/${data.id}`, data);
       response = await response.data;
       console.log(response);
 

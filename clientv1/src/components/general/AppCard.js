@@ -25,26 +25,26 @@ const useStyle = makeStyles({
 
 const AppCard = ({ patient, onEdit, onDelete, report, handleMore }) => {
   const classes = useStyle();
-  console.log(report);
+  console.log(patient);
   return (
-    <Card key={report ? report._id : patient._id} className={classes.card}>
+    <Card key={report ? report.id : patient.id} className={classes.card}>
       <CardHeader
         avatar={
           <Avatar aria-label="user-name" className={classes.avatar}>
-            {patient.name.substr(0, 1)}
+            {patient.firstName && patient.firstName.substr(0, 1)}
           </Avatar>
         }
-        title={patient.name}
+        title={patient.firstName + " " + patient.lastName}
         subheader={`${report ? "Kontrolluar" : "Regjistruar"} me date ${
-          report ? dateFormatter(report.date) : dateFormatter(patient.created)
+          report ? dateFormatter(report.date) : dateFormatter(patient.createdAt)
         }`}
       />
       <CardContent>
         {!report && (
           <>
             <Typography>
-              {patient.birthday
-                ? `Datelindja ${dateFormatter(patient.birthday)}`
+              {patient.birthDay
+                ? `Datelindja ${dateFormatter(patient.birthDay)}`
                 : `Viti i lindjes ${patient.yearOfBirth}`}
             </Typography>
             <Typography>Adresa:{patient.address}</Typography>
